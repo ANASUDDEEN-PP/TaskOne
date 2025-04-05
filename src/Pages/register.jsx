@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./style.css";
-import { useNavigate } from 'react-router-dom';     //import usNavigate
+import { useNavigate } from 'react-router-dom'; 
+import axios from "axios";    //import usNavigate
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -9,7 +10,7 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();     //set useNaviagtion in navigate const variable
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const userData = {
             name,
@@ -17,10 +18,12 @@ const Register = () => {
             email
         }
         console.log(userData)
-        if(userData.name == "" || userData.phone == "" || userData.email == "") // to check data vlaidations
+        if(userData.name === "" || userData.phone === "" || userData.email === "") // to check data vlaidations
             alert("All feilds are Required...")
-        else
-            navigate('/login')      // to navigate another component
+        else{
+            const sendData = await axios.post('http://localhost:8080/user/register', userData);
+            console.log(sendData);
+        }
     }
     return (
       <div className='main-sct'>
