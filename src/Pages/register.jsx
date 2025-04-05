@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import "./style.css";
+import { useNavigate } from 'react-router-dom';     //import usNavigate
 
 const Register = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const navigate = useNavigate();     //set useNaviagtion in navigate const variable
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const userData = {
@@ -14,6 +17,10 @@ const Register = () => {
             email
         }
         console.log(userData)
+        if(userData.name == "" || userData.phone == "" || userData.email == "") // to check data vlaidations
+            alert("All feilds are Required...")
+        else
+            navigate('/login')      // to navigate another component
     }
     return (
       <div className='main-sct'>
